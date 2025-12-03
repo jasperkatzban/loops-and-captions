@@ -12,6 +12,7 @@
             disablePictureInPicture="true"
             autoplay
             loop
+            muted
         >
             <track kind="captions" />
         </video>
@@ -29,6 +30,8 @@
 
     video {
         width: 100%;
+        filter: saturate(60%);
+        filter: contrast(80%);
     }
 
     .caption p {
