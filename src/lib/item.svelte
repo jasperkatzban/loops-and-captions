@@ -58,6 +58,7 @@
         font-optical-sizing: auto;
         font-weight: 400;
         font-style: normal;
-        margin-block: 0.5rem;
+        margin-top: 1rem;
+        margin-bottom: 0rem;
     }
 </style>
