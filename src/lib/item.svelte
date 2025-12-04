@@ -12,7 +12,7 @@
     });
 </script>
 
-<div class="item" style:display={videoIsLoaded ? "block" : "none"}>
+<div class="item">
     <div class="video-wrapper">
         <video
             {src}
@@ -58,6 +58,7 @@
         font-optical-sizing: auto;
         font-weight: 400;
         font-style: normal;
+        font-size: 1.1rem;
         margin-top: 1rem;
         margin-bottom: 0rem;
     }
