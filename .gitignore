@@ -23,4 +23,4 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
 # Content
-/src/lib/videos/*
+# /src/lib/videos/*
