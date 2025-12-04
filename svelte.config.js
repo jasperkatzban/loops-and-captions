@@ -10,7 +10,7 @@ const config = {
 			fallback: 'index.html'
 		}),
 		paths: {
-			base: process.argv.includes('dev') ? '' : '/loops-and-captions'
+			base: ''
 		}
 	}
 };
