@@ -7,10 +7,10 @@ const config = {
 	kit: {
 		appDir: 'app',
 		adapter: adapter({
-			fallback: 'app.html'
+			fallback: 'index.html'
 		}),
 		paths: {
-			base: process.argv.includes('dev') ? '' : process.env.BASE_PATH
+			base: process.argv.includes('dev') ? '' : '/loops-and-captions'
 		}
 	}
 };
