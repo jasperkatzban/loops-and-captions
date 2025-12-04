@@ -108,8 +108,8 @@ export const videoItems = [
         "caption": "taking the dog for a walk",
     },
     {
-        "src": "videos/the appeal of freedom.webm",
-        "caption": "the appeal of freedom",
+        "src": "videos/the allure of freedom.webm",
+        "caption": "the allure of freedom",
     },
     {
         "src": "videos/tickle me.webm",

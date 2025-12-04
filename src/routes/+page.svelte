@@ -1,5 +1,6 @@
 <script lang="ts">
     import Item from "$lib/item.svelte";
+    import EmptyItem from "../lib/emptyItem.svelte";
     import { videoItems } from "$lib/videos";
 
     let allVideosLoaded = $state(false);
@@ -36,6 +37,8 @@
                         bind:videoIsLoaded={videoStatus[i]}
                     />
                 {/each}
+                <EmptyItem />
+                <EmptyItem caption="made by jasper" />
             {/await}
         </div>
     </div>
@@ -50,7 +53,7 @@
     }
 
     .content {
-        padding: 4rem;
+        padding: 5rem;
     }
 
     .grid {
@@ -58,7 +61,8 @@
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
         align-items: stretch;
-        gap: 5rem;
+        gap: 6rem;
+        margin-bottom: -2rem;
     }
 
     .loader {
@@ -75,6 +79,7 @@
         font-optical-sizing: auto;
         font-weight: 400;
         font-style: normal;
+        font-size: 1.1rem;
         margin-block: 0.5rem;
     }
 </style>
