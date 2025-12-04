@@ -28,8 +28,8 @@ export const videoItems = [
         "caption": "consult the mirror",
     },
     {
-        "src": "videos/curious, but too shy to ask.webm",
-        "caption": "curious, but too shy to ask",
+        "src": "videos/pelican instincts.webm",
+        "caption": "pelican instincts",
     },
     {
         "src": "videos/departure.webm",
