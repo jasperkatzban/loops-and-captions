@@ -8,6 +8,13 @@
         validCaptions: string[];
     }
 
+    interface videoItem {
+        src: string;
+        caption: string;
+    }
+
+    const MAX_SHUFFLE_ATTEMPTS = 2000;
+
     // sort items ascending based on how many captions are valid
     itemManifest.sort(
         (a, b) => a.validCaptions.length - b.validCaptions.length,
@@ -28,7 +35,7 @@
         allVideosLoaded = !videoStatus.includes(false);
     });
 
-    function shuffleManifest(manifest: manifestItem[]) {
+    function shuffleVideoItems(manifest: videoItem[]) {
         for (let i = manifest.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [manifest[i], manifest[j]] = [manifest[j], manifest[i]];
@@ -49,50 +56,69 @@
         // temporary buffer to store shuffle attempts
         const attemptedVideoItems = videoItems;
 
-        let availableCaptions: Set<string>;
+        let availableCaptions = new Set<string>();
 
-        do {
+        let attempts = 0;
+
+        const attemptCaptionShuffle = () => {
             // reset available captions
             availableCaptions = createAvailableCaptions();
 
             // pick captions from the list
-            itemManifest.forEach((item) => {
-                let chosenCaption: string;
+            itemManifest.forEach((item: manifestItem) => {
+                let trialCaption: string;
                 let attempts = 0;
-                let trialCaptions = item.validCaptions;
+                let captionsToTry = $state.snapshot(item.validCaptions);
 
                 do {
-                    let range = trialCaptions.length - 1;
+                    // if there are no more valid captions for the item left,
+                    // this iteration is failed and should restart
+                    if (captionsToTry.length == 0) {
+                        return false;
+                    }
+
+                    let range = captionsToTry.length - 1;
                     let i = Math.round(Math.random() * range);
                     // random caption chosen
-                    chosenCaption = trialCaptions[i];
+                    trialCaption = captionsToTry[i];
+
+                    // ensure we don't try the same option again
+                    let removed = captionsToTry.splice(i, 1);
 
                     attempts++;
-                } while (
-                    !availableCaptions.has(chosenCaption) &&
-                    attempts < 10
-                );
+                } while (!availableCaptions.has(trialCaption));
 
+                let chosenCaption = trialCaption;
                 availableCaptions.delete(chosenCaption);
 
                 let index = videoItems.findIndex(
-                    (videoItem) => videoItem.src == item.src,
+                    (videoItem: videoItem) => videoItem.src == item.src,
                 );
 
                 attemptedVideoItems[index].caption = chosenCaption;
             });
-        } while (availableCaptions.size > 0);
+            return true;
+        };
 
+        do {
+            attempts++;
+            if (attemptCaptionShuffle() == false) {
+                continue;
+            }
+        } while (availableCaptions.size > 0 && attempts < MAX_SHUFFLE_ATTEMPTS);
+
+        // set the entire state array to ensure new captions are displayed all at once
         videoItems = attemptedVideoItems;
-        console.log(availableCaptions);
     }
 
     function createVideoItems(manifest: any) {
-        let shuffledManifest = shuffleManifest(manifest);
-
-        return shuffledManifest.map((item: manifestItem) => {
+        let videoItems = manifest.map((item: manifestItem) => {
             return { src: item.src, caption: item.validCaptions[0] };
         });
+
+        shuffleVideoItems(videoItems);
+
+        return videoItems;
     }
 
     // await the proper mapping of captions to video items

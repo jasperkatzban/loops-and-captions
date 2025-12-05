@@ -37,7 +37,7 @@ export const itemManifest = [
     },
     {
         "src": "videos/drunk rhythm.webm",
-        "validCaptions": ["drunk rhythm", "just a peek", "the allure of freedom"],
+        "validCaptions": ["drunk rhythm", "just a peek", "the allure of freedom", "car wash"],
     },
     {
         "src": "videos/get a real job.webm",
@@ -57,7 +57,7 @@ export const itemManifest = [
     },
     {
         "src": "videos/just a peek.webm",
-        "validCaptions": ["just a peek", "the allure of freedom", "civil engineering"],
+        "validCaptions": ["just a peek", "the allure of freedom", "civil engineering", "cherish it while it lasts"],
     },
     {
         "src": "videos/just hanging out.webm",
