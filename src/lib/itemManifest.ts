@@ -5,19 +5,19 @@ export const itemManifest = [
     },
     {
         "src": "videos/attention seeker.webm",
-        "validCaptions": ["attention seeker"],
+        "validCaptions": ["attention seeker", "radiate", "tickle me"],
     },
     {
         "src": "videos/car wash.webm",
-        "validCaptions": ["car wash"],
+        "validCaptions": ["car wash", "drunk rhythm", "what shampoo do you use?"],
     },
     {
         "src": "videos/cherish it while it lasts.webm",
-        "validCaptions": ["cherish it while it lasts"],
+        "validCaptions": ["cherish it while it lasts", "radiate", "steady-state", "departure"],
     },
     {
         "src": "videos/civil engineering.webm",
-        "validCaptions": ["civil engineering"],
+        "validCaptions": ["civil engineering", "cherish it while it lasts", "just hanging out"],
     },
     {
         "src": "videos/constructive debate.webm",
@@ -33,19 +33,19 @@ export const itemManifest = [
     },
     {
         "src": "videos/departure.webm",
-        "validCaptions": ["departure"],
+        "validCaptions": ["departure", "tickle me", "attention seeker"],
     },
     {
         "src": "videos/drunk rhythm.webm",
-        "validCaptions": ["drunk rhythm"],
+        "validCaptions": ["drunk rhythm", "just a peek", "the allure of freedom"],
     },
     {
         "src": "videos/get a real job.webm",
-        "validCaptions": ["get a real job"],
+        "validCaptions": ["get a real job", "just hanging out", "outer space"],
     },
     {
         "src": "videos/heaven said no.webm",
-        "validCaptions": ["heaven said no"],
+        "validCaptions": ["heaven said no", "just a peek", "ready for takeoff"],
     },
     {
         "src": "videos/ikea solar system.webm",
@@ -53,71 +53,71 @@ export const itemManifest = [
     },
     {
         "src": "videos/in my thoughts again.webm",
-        "validCaptions": ["in my thoughts again"],
+        "validCaptions": ["in my thoughts again", "outer space", "consult the mirror"],
     },
     {
         "src": "videos/just a peek.webm",
-        "validCaptions": ["just a peek"],
+        "validCaptions": ["just a peek", "the allure of freedom", "civil engineering"],
     },
     {
         "src": "videos/just hanging out.webm",
-        "validCaptions": ["just hanging out"],
+        "validCaptions": ["just hanging out", "heaven said no", "cherish it while it lasts"],
     },
     {
         "src": "videos/nice fade, dude.webm",
-        "validCaptions": ["nice fade, dude"],
+        "validCaptions": ["nice fade, dude", "steady-state", "cherish it while it lasts"],
     },
     {
         "src": "videos/office work.webm",
-        "validCaptions": ["office work"],
+        "validCaptions": ["office work", "attention seeker", "steady-state", "what shampoo do you use?"],
     },
     {
         "src": "videos/outer space.webm",
-        "validCaptions": ["outer space"],
+        "validCaptions": ["outer space", "in my thoughts again"],
     },
     {
         "src": "videos/public transit.webm",
-        "validCaptions": ["public transit"],
+        "validCaptions": ["public transit", "get a real job", "taking the dog for a walk", "tickle me"],
     },
     {
         "src": "videos/radiate.webm",
-        "validCaptions": ["radiate"],
+        "validCaptions": ["radiate", "steady-state", "consult the mirror", "nice fade, dude"],
     },
     {
         "src": "videos/ready for takeoff.webm",
-        "validCaptions": ["ready for takeoff"],
+        "validCaptions": ["ready for takeoff", "steady-state", "the allure of freedom"],
     },
     {
         "src": "videos/right on time.webm",
-        "validCaptions": ["right on time"],
+        "validCaptions": ["right on time", "departure", "attention seeker"],
     },
     {
         "src": "videos/Sisyphus.webm",
-        "validCaptions": ["Sisyphus"],
+        "validCaptions": ["Sisyphus", "public transit"],
     },
     {
         "src": "videos/steady-state.webm",
-        "validCaptions": ["steady-state"],
+        "validCaptions": ["steady-state", "departure", "in my thoughts again", "outer space", "cherish it while it lasts"],
     },
     {
         "src": "videos/superfund waterpark.webm",
-        "validCaptions": ["superfund waterpark"],
+        "validCaptions": ["superfund waterpark", "consult the mirror"],
     },
     {
         "src": "videos/taking the dog for a walk.webm",
-        "validCaptions": ["taking the dog for a walk"],
+        "validCaptions": ["taking the dog for a walk", "right on time", "steady-state", "Sisyphus"],
     },
     {
         "src": "videos/the allure of freedom.webm",
-        "validCaptions": ["the allure of freedom"],
+        "validCaptions": ["the allure of freedom", "outer space", "just a peek", "ready for takeoff", "cherish it while it lasts"],
     },
     {
         "src": "videos/tickle me.webm",
-        "validCaptions": ["tickle me"],
+        "validCaptions": ["tickle me", "office work", "in my thoughts again", "outer space"],
     },
     {
         "src": "videos/what shampoo do you use.webm",
-        "validCaptions": ["what shampoo do you use?"],
+        "validCaptions": ["what shampoo do you use?", "just hanging out", "attention seeker", "the allure of freedom"],
     }
 ]
 
@@ -152,5 +152,4 @@ export const allCaptions = [
     "the allure of freedom",
     "tickle me",
     "what shampoo do you use?",
-    "2"
 ]

@@ -3,86 +3,101 @@
     import EmptyItem from "../lib/emptyItem.svelte";
     import { itemManifest, allCaptions } from "$lib/itemManifest";
 
+    interface manifestItem {
+        src: string;
+        validCaptions: string[];
+    }
+
     // sort items ascending based on how many captions are valid
     itemManifest.sort(
         (a, b) => a.validCaptions.length - b.validCaptions.length,
     );
 
-    let availableCaptions = createAvailableCaptions();
-
+    // create stateful list of video items based on item Manifest
     let videoItems = $state(createVideoItems(itemManifest));
-    let shuffledVideoItems = $state(videoItems);
 
     let allVideosLoaded = $state(false);
 
+    // set loading status to stateful variable
     let videoStatus = $state(
-        Array.apply(null, Array(shuffledVideoItems.length)).map(() => false),
+        Array.apply(null, Array(videoItems.length)).map(() => false),
     );
 
+    // check if videos are loaded
     $effect(() => {
         allVideosLoaded = !videoStatus.includes(false);
     });
 
+    function shuffleManifest(manifest: manifestItem[]) {
+        for (let i = manifest.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [manifest[i], manifest[j]] = [manifest[j], manifest[i]];
+        }
+        return manifest;
+    }
+
     function createAvailableCaptions() {
-        let availableCaptions = new Set();
+        let availableCaptions = new Set<string>();
 
         allCaptions.forEach((caption) => {
             availableCaptions.add(caption);
         });
-
         return availableCaptions;
     }
 
-    function createVideoItems(manifest: any) {
-        return manifest.map(
-            (item: { src: string; validCaptions: string[] }) => {
-                return { src: item.src, caption: item.validCaptions[0] };
-            },
-        );
+    function shuffleCaptions() {
+        // temporary buffer to store shuffle attempts
+        const attemptedVideoItems = videoItems;
+
+        let availableCaptions: Set<string>;
+
+        do {
+            // reset available captions
+            availableCaptions = createAvailableCaptions();
+
+            // pick captions from the list
+            itemManifest.forEach((item) => {
+                let chosenCaption: string;
+                let attempts = 0;
+                let trialCaptions = item.validCaptions;
+
+                do {
+                    let range = trialCaptions.length - 1;
+                    let i = Math.round(Math.random() * range);
+                    // random caption chosen
+                    chosenCaption = trialCaptions[i];
+
+                    attempts++;
+                } while (
+                    !availableCaptions.has(chosenCaption) &&
+                    attempts < 10
+                );
+
+                availableCaptions.delete(chosenCaption);
+
+                let index = videoItems.findIndex(
+                    (videoItem) => videoItem.src == item.src,
+                );
+
+                attemptedVideoItems[index].caption = chosenCaption;
+            });
+        } while (availableCaptions.size > 0);
+
+        videoItems = attemptedVideoItems;
+        console.log(availableCaptions);
     }
 
-    function shuffleCaptions() {
-        console.log("run");
+    function createVideoItems(manifest: any) {
+        let shuffledManifest = shuffleManifest(manifest);
 
-        // reset available captions
-        availableCaptions = createAvailableCaptions();
-
-        // pick captions from the list
-        itemManifest.forEach((item) => {
-            let chosenCaption: string;
-
-            do {
-                chosenCaption = pickCaption(item.validCaptions);
-            } while (!availableCaptions.has(chosenCaption));
-
-            availableCaptions.delete(chosenCaption);
-
-            //index of here
-            let index = shuffledVideoItems.findIndex(
-                (videoItem) => videoItem.src == item.src,
-            );
-            shuffledVideoItems[index].caption = chosenCaption;
+        return shuffledManifest.map((item: manifestItem) => {
+            return { src: item.src, caption: item.validCaptions[0] };
         });
     }
 
-    function pickCaption(validCaptions: string[]) {
-        let range = validCaptions.length - 1;
-        let i = Math.round(Math.random() * range);
-
-        return validCaptions[i];
-    }
-
-    function shuffleItems() {
-        return Promise.resolve(fisherYatesShuffle($state.snapshot(videoItems)));
-    }
-
-    function fisherYatesShuffle(reference: { src: string; caption: string }[]) {
-        let arr = reference;
-        for (let i = arr.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
-        return arr;
+    // await the proper mapping of captions to video items
+    function getVideoItems() {
+        return Promise.resolve(videoItems);
     }
 </script>
 
@@ -95,17 +110,17 @@
         }}
     >
         <div class="grid">
-            {#await shuffleItems() then orderedVideoItems}
-                {#each shuffledVideoItems as videoItem, i}
+            {#await getVideoItems() then readyVideoItems}
+                {#each readyVideoItems as videoItem, i}
                     <Item
                         src={videoItem.src}
                         caption={videoItem.caption}
                         bind:videoIsLoaded={videoStatus[i]}
                     />
                 {/each}
-                <EmptyItem />
-                <EmptyItem caption="made by jasper" />
             {/await}
+            <EmptyItem />
+            <EmptyItem caption="made by jasper" />
         </div>
     </div>
     <div class="loader" style:display={allVideosLoaded ? "none" : "flex"}>
