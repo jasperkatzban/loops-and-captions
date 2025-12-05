@@ -1,6 +1,8 @@
 <script lang="ts">
     import Item from "$lib/item.svelte";
-    import TextItem from "../lib/textItem.svelte";
+    import TextItem from "$lib/textItem.svelte";
+    import MouseCursor from "$lib/MouseCursor.svelte";
+
     import { itemManifest, allCaptions } from "$lib/itemManifest";
     import { onMount } from "svelte";
 
@@ -178,6 +180,7 @@
         onmouseup={() => {
             shuffleCaptions();
         }}
+        role="none"
     >
         <div class="grid" id="content-grid">
             {#await getVideoItems() then readyVideoItems}
@@ -199,6 +202,7 @@
         <p>loading...</p>
     </div>
 </div>
+<MouseCursor />
 
 <style>
     .page {
