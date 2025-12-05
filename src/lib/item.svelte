@@ -1,4 +1,20 @@
 <script lang="ts">
+    import { inview } from "svelte-inview";
+    import type { Options } from "svelte-inview";
+
+    const randomizeRootMargin = () => {
+        const pixels = 10 + Math.floor(Math.random() * 40);
+        console.log(pixels);
+
+        return pixels + "px";
+    };
+
+    const options: Options = {
+        rootMargin: randomizeRootMargin(),
+    };
+
+    let videoRef: HTMLElement;
+
     let { src, caption, videoIsLoaded = $bindable(false) } = $props();
 
     let readyState = $state(0);
@@ -13,7 +29,12 @@
 </script>
 
 <div class="item">
-    <div class="video-wrapper">
+    <div
+        class="video-wrapper"
+        use:inview={options}
+        oninview_enter={() => videoRef.play()}
+        oninview_leave={() => videoRef.pause()}
+    >
         <video
             {src}
             ontouchmove={(e) => {
@@ -21,7 +42,7 @@
             }}
             disablePictureInPicture={true}
             bind:readyState
-            autoplay
+            bind:this={videoRef}
             loop
             muted
         >
