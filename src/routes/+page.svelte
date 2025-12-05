@@ -173,7 +173,7 @@
     }
 </script>
 
-<div class="page">
+<div class="page" style:height={allVideosLoaded ? "min-content" : "100vh"}>
     <div
         class="content"
         style:display={allVideosLoaded ? "block" : "none"}
@@ -206,7 +206,7 @@
 
 <style>
     .page {
-        height: 100vh;
+        background-color: white;
     }
 
     .content {
