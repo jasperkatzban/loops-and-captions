@@ -1,7 +1,8 @@
 <script lang="ts">
     import Item from "$lib/item.svelte";
-    import EmptyItem from "../lib/emptyItem.svelte";
+    import TextItem from "../lib/textItem.svelte";
     import { itemManifest, allCaptions } from "$lib/itemManifest";
+    import { onMount } from "svelte";
 
     interface manifestItem {
         src: string;
@@ -125,6 +126,49 @@
     function getVideoItems() {
         return Promise.resolve(videoItems);
     }
+
+    // handle positioning the credits tag nicely in the grid
+    let grid: HTMLElement | null = $state(null);
+    let gridColumnCount = $state(4);
+    let numberOfSpacerItems = $derived(
+        calculateNumberOfSpacerItems(gridColumnCount),
+    );
+
+    onMount(() => {
+        window.addEventListener("resize", setNumberOfColumns);
+
+        return () => {
+            window.removeEventListener("resize", setNumberOfColumns);
+        };
+    });
+
+    $effect(() => {
+        grid = document.getElementById("content-grid");
+    });
+
+    function setNumberOfColumns() {
+        if (grid) {
+            const gridComputedStyle = window.getComputedStyle(grid);
+            // get number of grid columns
+            gridColumnCount = gridComputedStyle
+                .getPropertyValue("grid-template-columns")
+                .split(" ").length;
+        }
+    }
+
+    // compute number of spacer items based on the number of columns
+    function calculateNumberOfSpacerItems(gridColumnCount: number) {
+        let n = 0;
+
+        if (gridColumnCount < 3) {
+            n = 0;
+        } else if (gridColumnCount < 5) {
+            n = 1;
+        } else {
+            n = 0;
+        }
+        return n;
+    }
 </script>
 
 <div class="page">
@@ -135,7 +179,7 @@
             shuffleCaptions();
         }}
     >
-        <div class="grid">
+        <div class="grid" id="content-grid">
             {#await getVideoItems() then readyVideoItems}
                 {#each readyVideoItems as videoItem, i}
                     <Item
@@ -145,8 +189,10 @@
                     />
                 {/each}
             {/await}
-            <EmptyItem />
-            <EmptyItem caption="made by jasper" />
+            {#each { length: numberOfSpacerItems }}
+                <TextItem />
+            {/each}
+            <TextItem credits={true} />
         </div>
     </div>
     <div class="loader" style:display={allVideosLoaded ? "none" : "flex"}>
