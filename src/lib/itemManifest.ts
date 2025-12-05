@@ -69,7 +69,7 @@ export const itemManifest = [
     },
     {
         "src": "videos/office work.webm",
-        "validCaptions": ["office work", "attention seeker", "steady-state", "what shampoo do you use?"],
+        "validCaptions": ["office work", "attention seeker", "steady-state"],
     },
     {
         "src": "videos/outer space.webm",

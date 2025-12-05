@@ -83,7 +83,7 @@
                     trialCaption = captionsToTry[i];
 
                     // ensure we don't try the same option again
-                    let removed = captionsToTry.splice(i, 1);
+                    captionsToTry.splice(i, 1);
 
                     attempts++;
                 } while (!availableCaptions.has(trialCaption));
