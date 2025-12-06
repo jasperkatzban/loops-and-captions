@@ -65,7 +65,7 @@
     }
 
     .h-full {
-        height: 100vw;
+        height: 100vh;
     }
 
     svg {
