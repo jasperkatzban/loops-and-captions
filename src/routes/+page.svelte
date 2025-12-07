@@ -7,6 +7,22 @@
     import { onMount } from "svelte";
     import RefreshButton from "$lib/RefreshButton.svelte";
 
+    import * as videoSrcs from "$lib/assets/videos/";
+    type videoSrcKey = keyof typeof videoSrcs;
+
+    // preload all videos
+    function preload() {
+        let videoPreloads = Object.keys(videoSrcs).map((key) => {
+            return new Promise((resolve) => {
+                let src = videoSrcs[key as videoSrcKey];
+                let video = document.createElement("video");
+                video.oncanplaythrough = resolve;
+                video.src = src;
+            });
+        });
+        return Promise.all(videoPreloads);
+    }
+
     interface manifestItem {
         src: string;
         validCaptions: string[];
@@ -26,11 +42,11 @@
 
     // create stateful list of video items based on item Manifest
     let videoItems = $state(createVideoItems(itemManifest));
-
     let allVideosLoaded = $state(false);
 
     // set loading status to stateful variable
     let videoStatus = $state(
+        // svelte-ignore state_referenced_locally
         Array.apply(null, Array(videoItems.length)).map(() => false),
     );
 
@@ -96,7 +112,8 @@
                 availableCaptions.delete(chosenCaption);
 
                 let index = videoItems.findIndex(
-                    (videoItem: videoItem) => videoItem.src == item.src,
+                    (videoItem: videoItem) =>
+                        videoItem.src == videoSrcs[item.src as videoSrcKey],
                 );
 
                 attemptedVideoItems[index].caption = chosenCaption;
@@ -117,7 +134,10 @@
 
     function createVideoItems(manifest: any) {
         let videoItems = manifest.map((item: manifestItem) => {
-            return { src: item.src, caption: item.validCaptions[0] };
+            return {
+                src: videoSrcs[item.src as videoSrcKey],
+                caption: item.validCaptions[0],
+            };
         });
 
         shuffleVideoItems(videoItems);
@@ -183,14 +203,16 @@
 <div class="page" style:height={allVideosLoaded ? "min-content" : "100vh"}>
     <div class="content" style:display={allVideosLoaded ? "block" : "none"}>
         <div class="grid" id="content-grid">
-            {#await getVideoItems() then readyVideoItems}
-                {#each readyVideoItems as videoItem, i}
-                    <Item
-                        src={videoItem.src}
-                        caption={videoItem.caption}
-                        bind:videoIsLoaded={videoStatus[i]}
-                    />
-                {/each}
+            {#await preload() then _}
+                {#await getVideoItems() then readyVideoItems}
+                    {#each readyVideoItems as videoItem, i}
+                        <Item
+                            src={videoItem.src}
+                            caption={videoItem.caption}
+                            bind:videoIsLoaded={videoStatus[i]}
+                        />
+                    {/each}
+                {/await}
             {/await}
             {#each { length: numberOfSpacerItems }}
                 <TextItem />

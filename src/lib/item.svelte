@@ -12,7 +12,7 @@
         rootMargin: randomizeRootMargin(),
     };
 
-    let videoRef: HTMLElement;
+    let videoRef: HTMLMediaElement;
 
     let { src, caption, videoIsLoaded = $bindable(false) } = $props();
 

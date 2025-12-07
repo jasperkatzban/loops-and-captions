@@ -1,9 +1,23 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    import * as imgSrcs from "$lib/assets/cursor/";
+    type imgSrcKey = keyof typeof imgSrcs;
 
-    let cursorImgSrc = $state("cursor/0.svg");
+    // preload all source images for cursor
+    function preload() {
+        let imgPreloads = Object.keys(imgSrcs).map((key) => {
+            return new Promise((resolve) => {
+                let src = imgSrcs[key as imgSrcKey];
+                let img = new Image();
+                img.onload = resolve;
+                img.src = src;
+            });
+        });
+        return Promise.all(imgPreloads);
+    }
+
+    let cursorImgSrc = $state(imgSrcs["normal0"]);
     let cursorState = $state("normal");
-    $inspect(cursorState);
 
     let c = 0;
 
@@ -12,8 +26,9 @@
             const target = event.target;
             // Check if the hovered element is a link or refresh button
             if (
-                target.tagName === "A" ||
-                target.id === "refresh-button-visible-element"
+                target &&
+                (target.tagName === "A" ||
+                    target.id === "refresh-button-visible-element")
             ) {
                 cursorState = "hover";
             } else {
@@ -23,11 +38,15 @@
 
         const interval = setInterval(() => {
             if (cursorState == "normal") {
-                let i = c % 19;
-                cursorImgSrc = "cursor/" + i + ".svg";
+                let i = c % 20;
+                let index = "normal" + i;
+                cursorImgSrc = imgSrcs[index as imgSrcKey];
                 c++;
             } else {
-                cursorImgSrc = "cursor/hover.svg";
+                let i = c % 10;
+                let index = "hover" + i;
+                cursorImgSrc = imgSrcs[index as imgSrcKey];
+                c++;
             }
         }, 55);
 
@@ -66,14 +85,16 @@
     let position = useMousePosition();
 </script>
 
-<svg class="w-full h-full">
-    <image
-        href={cursorImgSrc}
-        x={position.x - 18}
-        y={position.y - 18}
-        height={36}
-    />
-</svg>
+{#await preload() then _}
+    <svg class="w-full h-full">
+        <image
+            href={cursorImgSrc}
+            x={position.x - 18}
+            y={position.y - 18}
+            height={36}
+        />
+    </svg>
+{/await}
 
 <style>
     :global(body) {

@@ -1,10 +1,11 @@
 <script lang="ts">
     let { credits = false } = $props();
+    import blank from "$lib/assets/blank.png";
 </script>
 
 <div class="item">
     <div class="video-wrapper">
-        <img src={"blank.png"} alt="" />
+        <img src={blank} alt="" />
     </div>
     {#if credits}
         <div class="caption">
