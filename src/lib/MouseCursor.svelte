@@ -69,8 +69,8 @@
     });
 
     const useMousePosition = () => {
-        let x = $state<number>(0);
-        let y = $state<number>(0);
+        let x = $state<number>(-100);
+        let y = $state<number>(-100);
 
         const updateMousePosition = (event: MouseEvent) => {
             x = event.clientX;
