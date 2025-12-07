@@ -36,10 +36,23 @@
             }
         });
 
+        document.addEventListener("mousedown", (event) => {
+            cursorState = "click";
+        });
+
+        document.addEventListener("mouseup", (event) => {
+            cursorState = "normal";
+        });
+
         const interval = setInterval(() => {
             if (cursorState == "normal") {
                 let i = c % 20;
                 let index = "normal" + i;
+                cursorImgSrc = imgSrcs[index as imgSrcKey];
+                c++;
+            } else if (cursorState == "click") {
+                let i = c % 10;
+                let index = "click" + i;
                 cursorImgSrc = imgSrcs[index as imgSrcKey];
                 c++;
             } else {
