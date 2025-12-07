@@ -74,7 +74,7 @@
 
     function shuffleCaptions() {
         // temporary buffer to store shuffle attempts
-        const attemptedVideoItems = videoItems;
+        const attemptedVideoItems = $state.snapshot(videoItems);
 
         let availableCaptions = new Set<string>();
 

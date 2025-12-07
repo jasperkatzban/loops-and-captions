@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { fade } from "svelte/transition";
     import { inview } from "svelte-inview";
     import type { Options } from "svelte-inview";
 
@@ -49,7 +50,9 @@
         </video>
     </div>
     <div class="caption">
-        <p>{caption}</p>
+        {#key caption}
+            <p in:fade>{caption}</p>
+        {/key}
     </div>
 </div>
 
@@ -69,6 +72,7 @@
 
     .caption {
         display: flex;
+        height: 1.8rem;
     }
 
     .caption p {
