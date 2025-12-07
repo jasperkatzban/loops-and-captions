@@ -64,7 +64,7 @@
         filter: sepia(20%);
         filter: saturate(60%);
         filter: contrast(80%);
-        border-radius: 0.15rem;
+        border-radius: 0.2rem;
     }
 
     .caption {
