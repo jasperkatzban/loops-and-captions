@@ -43,37 +43,38 @@
     });
 </script>
 
-{#await preload() then _}
-    <div class="button-wrapper">
-        <button
-            aria-label="option"
-            onclick={() => {
-                clickHandler();
-            }}
-            onmousedown={() => {
-                buttonState = "active";
-                buttonImgSrc = imgSrcs["active"];
-                buttonArrowIndex = 0;
-            }}
-            onmouseup={() => {
-                buttonState = "normal";
-            }}
-            onmouseenter={() => {
-                buttonState = "hovered";
-                buttonArrowIndex = 0;
-            }}
-            onmouseleave={() => {
-                buttonState = "normal";
-            }}
-        >
-            <img
-                id="refresh-button-visible-element"
-                src={buttonImgSrc}
-                alt="two arrows in a cross indicating a shuffling action"
-            />
-        </button>
-    </div>
-{/await}
+<!-- {#await preload() then _} -->
+<div class="button-wrapper">
+    <button
+        aria-label="option"
+        onclick={() => {
+            clickHandler();
+        }}
+        onmousedown={() => {
+            buttonState = "active";
+            buttonImgSrc = imgSrcs["active"];
+            buttonArrowIndex = 0;
+        }}
+        onmouseup={() => {
+            buttonState = "normal";
+        }}
+        onmouseenter={() => {
+            buttonState = "hovered";
+            buttonArrowIndex = 0;
+        }}
+        onmouseleave={() => {
+            buttonState = "normal";
+        }}
+    >
+        <img
+            id="refresh-button-visible-element"
+            src={buttonImgSrc}
+            alt="two arrows in a cross indicating a shuffling action"
+        />
+    </button>
+</div>
+
+<!-- {/await} -->
 
 <style>
     .button-wrapper {

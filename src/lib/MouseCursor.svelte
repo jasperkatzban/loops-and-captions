@@ -85,16 +85,17 @@
     let position = useMousePosition();
 </script>
 
-{#await preload() then _}
-    <svg class="w-full h-full">
-        <image
-            href={cursorImgSrc}
-            x={position.x - 18}
-            y={position.y - 18}
-            height={36}
-        />
-    </svg>
-{/await}
+<!-- {#await preload() then _} -->
+<svg class="w-full h-full">
+    <image
+        href={cursorImgSrc}
+        x={position.x - 18}
+        y={position.y - 18}
+        height={36}
+    />
+</svg>
+
+<!-- {/await} -->
 
 <style>
     :global(body) {

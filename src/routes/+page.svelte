@@ -203,17 +203,17 @@
 <div class="page" style:height={allVideosLoaded ? "min-content" : "100vh"}>
     <div class="content" style:display={allVideosLoaded ? "block" : "none"}>
         <div class="grid" id="content-grid">
-            {#await preload() then _}
-                {#await getVideoItems() then readyVideoItems}
-                    {#each readyVideoItems as videoItem, i}
-                        <Item
-                            src={videoItem.src}
-                            caption={videoItem.caption}
-                            bind:videoIsLoaded={videoStatus[i]}
-                        />
-                    {/each}
-                {/await}
+            <!-- {#await preload() then _} -->
+            {#await getVideoItems() then readyVideoItems}
+                {#each readyVideoItems as videoItem, i}
+                    <Item
+                        src={videoItem.src}
+                        caption={videoItem.caption}
+                        bind:videoIsLoaded={videoStatus[i]}
+                    />
+                {/each}
             {/await}
+            <!-- {/await} -->
             {#each { length: numberOfSpacerItems }}
                 <TextItem />
             {/each}
