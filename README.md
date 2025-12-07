@@ -2,8 +2,6 @@
 A collection of videos and captions with a few hidden surprises. 
 Have a scroll [here](https://loops-and-captions.jasperkatzban.com/)
 
-Note: This is an experiment in loading webm videos; using mp4 would be required for mobile iOS support.
-
 ## Developing
 
 To develop locally, clone the repo and install dependencies with `npm install`.
