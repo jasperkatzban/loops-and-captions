@@ -1,22 +1,14 @@
-# sv
+# loops and captions
+A collection of videos and captions with a few hidden surprises. 
+Have a scroll [here](https://loops-and-captions.jasperkatzban.com/)
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```sh
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
-```
+Note: This is an experiment in loading webp videos; using mp4 would be required for mobile iOS support.
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+To develop locally, clone the repo and install dependencies with `npm install`.
+
+Then, start a development server:
 
 ```sh
 npm run dev
@@ -27,7 +19,7 @@ npm run dev -- --open
 
 ## Building
 
-To create a production version of your app:
+To create a production version of the app:
 
 ```sh
 npm run build
@@ -35,4 +27,10 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+To create a deploy build of the app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+
+Then, run: 
+
+```sh
+npm run deploy
+```
