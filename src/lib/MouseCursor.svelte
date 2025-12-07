@@ -2,13 +2,33 @@
     import { onMount } from "svelte";
 
     let cursorImgSrc = $state("cursor/0.svg");
+    let cursorState = $state("normal");
+    $inspect(cursorState);
+
     let c = 0;
 
     onMount(() => {
+        document.addEventListener("mouseover", (event) => {
+            const target = event.target;
+            // Check if the hovered element is a link or refresh button
+            if (
+                target.tagName === "A" ||
+                target.id === "refresh-button-visible-element"
+            ) {
+                cursorState = "hover";
+            } else {
+                cursorState = "normal";
+            }
+        });
+
         const interval = setInterval(() => {
-            let i = c % 19;
-            cursorImgSrc = "cursor/" + i + ".svg";
-            c++;
+            if (cursorState == "normal") {
+                let i = c % 19;
+                cursorImgSrc = "cursor/" + i + ".svg";
+                c++;
+            } else {
+                cursorImgSrc = "cursor/hover.svg";
+            }
         }, 55);
 
         return () => {
