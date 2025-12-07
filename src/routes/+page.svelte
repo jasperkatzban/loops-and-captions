@@ -5,6 +5,7 @@
 
     import { itemManifest, allCaptions } from "$lib/itemManifest";
     import { onMount } from "svelte";
+    import RefreshButton from "$lib/RefreshButton.svelte";
 
     interface manifestItem {
         src: string;
@@ -162,10 +163,16 @@
     function calculateNumberOfSpacerItems(gridColumnCount: number) {
         let n = 0;
 
-        if (gridColumnCount < 3) {
+        if (gridColumnCount == 1) {
             n = 0;
-        } else if (gridColumnCount < 5) {
+        } else if (gridColumnCount == 2) {
             n = 1;
+        } else if (gridColumnCount == 3) {
+            n = 2;
+        } else if (gridColumnCount == 4) {
+            n = 1;
+        } else if (gridColumnCount == 5) {
+            n = 4;
         } else {
             n = 0;
         }
@@ -174,14 +181,7 @@
 </script>
 
 <div class="page" style:height={allVideosLoaded ? "min-content" : "100vh"}>
-    <div
-        class="content"
-        style:display={allVideosLoaded ? "block" : "none"}
-        onmouseup={() => {
-            shuffleCaptions();
-        }}
-        role="none"
-    >
+    <div class="content" style:display={allVideosLoaded ? "block" : "none"}>
         <div class="grid" id="content-grid">
             {#await getVideoItems() then readyVideoItems}
                 {#each readyVideoItems as videoItem, i}
@@ -202,7 +202,13 @@
         <p>loading...</p>
     </div>
 </div>
-<MouseCursor />
+<div style:display={allVideosLoaded ? "block" : "none"}>
+    <RefreshButton clickHandler={shuffleCaptions} />
+</div>
+
+<div style:display={allVideosLoaded ? "block" : "none"}>
+    <MouseCursor />
+</div>
 
 <style>
     .page {

@@ -4,7 +4,6 @@
 
     const randomizeRootMargin = () => {
         const pixels = 10 + Math.floor(Math.random() * 40);
-        console.log(pixels);
 
         return pixels + "px";
     };

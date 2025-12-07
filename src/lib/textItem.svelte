@@ -48,6 +48,7 @@
 
     a {
         color: black;
+        cursor: none;
     }
 
     a:hover {
